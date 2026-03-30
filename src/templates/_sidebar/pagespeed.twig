@@ -1,0 +1,20 @@
+{% do view.registerAssetBundle("justinholtweb\\lightning\\assetbundles\\LightningAsset") %}
+
+<div class="lightning-sidebar" data-url="{{ url }}">
+    <fieldset>
+        <legend class="h6">PageSpeed Insights</legend>
+
+        <div class="lightning-sidebar-results" style="display:none;"></div>
+
+        <div class="lightning-sidebar-loading" style="display:none;">
+            <div class="spinner"></div>
+            <span>Auditing&hellip;</span>
+        </div>
+
+        <div class="lightning-sidebar-error" style="display:none;"></div>
+
+        <div class="lightning-sidebar-actions">
+            <button type="button" class="btn small lightning-sidebar-run-btn">Run Audit</button>
+        </div>
+    </fieldset>
+</div>

@@ -1,0 +1,23 @@
+{% import '_includes/forms' as forms %}
+
+{{ forms.textField({
+    label: 'URL to Audit',
+    instructions: 'The full URL to run PageSpeed Insights against (e.g. https://example.com).',
+    id: 'auditUrl',
+    name: 'auditUrl',
+    value: widget.auditUrl,
+    placeholder: 'https://example.com',
+    size: 50,
+}) }}
+
+{{ forms.selectField({
+    label: 'Strategy',
+    id: 'strategy',
+    name: 'strategy',
+    value: widget.strategy,
+    options: [
+        { label: 'Both Mobile & Desktop', value: 'both' },
+        { label: 'Mobile Only', value: 'mobile' },
+        { label: 'Desktop Only', value: 'desktop' },
+    ],
+}) }}

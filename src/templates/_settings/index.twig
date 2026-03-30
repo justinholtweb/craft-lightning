@@ -1,0 +1,27 @@
+{% import '_includes/forms' as forms %}
+
+{{ forms.autosuggestField({
+    first: true,
+    label: 'Google API Key',
+    instructions: 'Enter your Google PageSpeed Insights API key. [Get one from Google Cloud Console](https://console.cloud.google.com/apis/credentials). Make sure to enable the **PageSpeed Insights API** in your project.',
+    id: 'apiKey',
+    name: 'apiKey',
+    value: settings.apiKey,
+    suggestEnvVars: true,
+    required: true,
+    errors: settings.getErrors('apiKey'),
+}) }}
+
+{{ forms.selectField({
+    label: 'Default Strategy',
+    instructions: 'Choose the default device strategy for audits.',
+    id: 'defaultStrategy',
+    name: 'defaultStrategy',
+    value: settings.defaultStrategy,
+    options: [
+        { label: 'Both Mobile & Desktop', value: 'both' },
+        { label: 'Mobile Only', value: 'mobile' },
+        { label: 'Desktop Only', value: 'desktop' },
+    ],
+    errors: settings.getErrors('defaultStrategy'),
+}) }}

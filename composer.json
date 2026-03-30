@@ -1,0 +1,33 @@
+{
+  "name": "justinholtweb/craft-lightning",
+  "description": "Google PageSpeed Insights integration for Craft CMS — dashboard widget and entry-level performance auditing with Core Web Vitals metrics and optimization suggestions.",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Justin Holt",
+      "homepage": "https://justinholtweb.com"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "craftcms/cms": "^5.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "justinholtweb\\lightning\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "Lightning",
+    "handle": "lightning",
+    "hasCpSettings": true,
+    "hasCpSection": false,
+    "class": "justinholtweb\\lightning\\Plugin",
+    "developer": "Justin Holt",
+    "developerUrl": "https://justinholtweb.com",
+    "documentationUrl": "https://github.com/justinholtweb/craft-lightning",
+    "description": "Google PageSpeed Insights integration with CWV metrics and optimization suggestions."
+  }
+}

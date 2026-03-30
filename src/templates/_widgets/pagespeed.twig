@@ -1,0 +1,17 @@
+<div class="lightning-widget" data-widget-id="{{ widgetId }}" data-url="{{ widget.auditUrl }}" data-strategy="{{ widget.strategy }}">
+    {% if not widget.auditUrl %}
+        <div class="lightning-empty">
+            <p>No URL configured. Edit this widget to set a URL to audit.</p>
+        </div>
+    {% else %}
+        <div class="lightning-results" style="display:none;"></div>
+        <div class="lightning-loading" style="display:none;">
+            <div class="spinner"></div>
+            <p>Running PageSpeed audit&hellip; This may take a moment.</p>
+        </div>
+        <div class="lightning-actions">
+            <button type="button" class="btn small lightning-run-btn">Run Audit</button>
+        </div>
+        <div class="lightning-error" style="display:none;"></div>
+    {% endif %}
+</div>
