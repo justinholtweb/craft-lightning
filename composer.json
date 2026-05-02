@@ -26,7 +26,7 @@
     "hasCpSection": false,
     "class": "justinholtweb\\lightning\\Plugin",
     "developer": "Justin Holt",
-    "developerUrl": "https://justinholtweb.com",
+    "developerUrl": "https://justinholt.com",
     "documentationUrl": "https://github.com/justinholtweb/craft-lightning",
     "description": "Google PageSpeed Insights integration with CWV metrics and optimization suggestions."
   }
