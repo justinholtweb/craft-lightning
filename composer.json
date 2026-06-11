@@ -1,22 +1,64 @@
 {
   "name": "justinholtweb/craft-lightning",
   "description": "Google PageSpeed Insights integration for Craft CMS — dashboard widget and entry-level performance auditing with Core Web Vitals metrics and optimization suggestions.",
-  "version": "1.0.0",
   "type": "craft-plugin",
-  "license": "MIT",
+  "license": "proprietary",
+  "version": "5.0.0",
+  "keywords": [
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "pagespeed",
+    "lighthouse",
+    "core web vitals",
+    "performance",
+    "seo",
+    "yii2"
+  ],
   "authors": [
     {
       "name": "Justin Holt",
-      "homepage": "https://justinholtweb.com"
+      "homepage": "https://justinholt.com"
     }
   ],
+  "support": {
+    "email": "justin@justinholt.com",
+    "issues": "https://github.com/justinholtweb/craft-lightning/issues?state=open",
+    "docs": "https://craft-lightning.com/docs"
+  },
   "require": {
     "php": "^8.2",
     "craftcms/cms": "^5.3.0"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5",
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main"
+  },
   "autoload": {
     "psr-4": {
       "justinholtweb\\lightning\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "justinholtweb\\lightning\\tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "phpstan": "phpstan --memory-limit=1G",
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix"
+  },
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "8.2"
+    },
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
     }
   },
   "extra": {
@@ -27,7 +69,7 @@
     "class": "justinholtweb\\lightning\\Plugin",
     "developer": "Justin Holt",
     "developerUrl": "https://justinholt.com",
-    "documentationUrl": "https://github.com/justinholtweb/craft-lightning",
+    "documentationUrl": "https://craft-lightning.com/docs",
     "description": "Google PageSpeed Insights integration with CWV metrics and optimization suggestions."
   }
 }

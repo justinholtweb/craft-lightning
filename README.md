@@ -83,4 +83,20 @@ With an API key, you get approximately 25,000 requests per day. Each "Both" audi
 
 ## License
 
-MIT — see [LICENSE.md](LICENSE.md).
+This plugin is licensed under [The Craft License](LICENSE.md).
+
+## Development
+
+Install dependencies and run the test suite:
+
+```sh
+composer install
+composer test
+```
+
+Static analysis and code style checks are also available:
+
+```sh
+composer phpstan
+composer check-cs
+```

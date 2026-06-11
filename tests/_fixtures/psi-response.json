@@ -1,0 +1,99 @@
+{
+  "lighthouseResult": {
+    "categories": {
+      "performance": {
+        "id": "performance",
+        "title": "Performance",
+        "score": 0.86
+      }
+    },
+    "audits": {
+      "first-contentful-paint": {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "score": 0.91,
+        "displayValue": "1.2 s",
+        "numericValue": 1234.5
+      },
+      "largest-contentful-paint": {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "score": 0.62,
+        "displayValue": "2.5 s",
+        "numericValue": 2500.0
+      },
+      "total-blocking-time": {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "score": 0.75,
+        "displayValue": "150 ms",
+        "numericValue": 150.0
+      },
+      "cumulative-layout-shift": {
+        "id": "cumulative-layout-shift",
+        "title": "Cumulative Layout Shift",
+        "score": 1,
+        "displayValue": "0.01",
+        "numericValue": 0.01
+      },
+      "speed-index": {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "score": 0.8,
+        "displayValue": "1.8 s",
+        "numericValue": 1800.0
+      },
+      "render-blocking-resources": {
+        "id": "render-blocking-resources",
+        "title": "Eliminate render-blocking resources",
+        "description": "Resources are blocking the first paint of your page. [Learn more](https://example.com).",
+        "score": 0.4,
+        "displayValue": "Potential savings of 450 ms",
+        "details": {
+          "type": "opportunity",
+          "overallSavingsMs": 450
+        }
+      },
+      "unused-css-rules": {
+        "id": "unused-css-rules",
+        "title": "Reduce unused CSS",
+        "description": "Reduce unused rules from stylesheets.",
+        "score": 0.5,
+        "displayValue": "Potential savings of 1,200 ms",
+        "details": {
+          "type": "opportunity",
+          "overallSavingsMs": 1200.7
+        }
+      },
+      "tiny-savings": {
+        "id": "tiny-savings",
+        "title": "Negligible opportunity",
+        "description": "This should be filtered out because savings are under the threshold.",
+        "score": 0.9,
+        "details": {
+          "type": "opportunity",
+          "overallSavingsMs": 50
+        }
+      },
+      "mainthread-work-breakdown": {
+        "id": "mainthread-work-breakdown",
+        "title": "Minimize main-thread work",
+        "description": "Consider reducing the time spent parsing <b>and</b> executing JS.",
+        "score": 0.3,
+        "displayValue": "2.1 s",
+        "details": {
+          "type": "table"
+        }
+      },
+      "passing-diagnostic": {
+        "id": "passing-diagnostic",
+        "title": "Healthy table audit",
+        "description": "This passes and should not appear as a diagnostic.",
+        "score": 1,
+        "details": {
+          "type": "table"
+        }
+      }
+    }
+  }
+}
