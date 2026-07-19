@@ -19,6 +19,9 @@ use yii\base\Event;
 
 /**
  * Lightning — Google PageSpeed Insights for Craft CMS
+ *
+ * @method Settings getSettings()
+ * @property-read PageSpeedService $pageSpeed
  */
 class Plugin extends BasePlugin
 {
@@ -38,7 +41,7 @@ class Plugin extends BasePlugin
     {
         parent::init();
 
-        Craft::$app->onInit(function () {
+        Craft::$app->onInit(function() {
             $this->_registerEventListeners();
         });
     }
@@ -62,7 +65,7 @@ class Plugin extends BasePlugin
         Event::on(
             Dashboard::class,
             Dashboard::EVENT_REGISTER_WIDGET_TYPES,
-            function (RegisterComponentTypesEvent $event) {
+            function(RegisterComponentTypesEvent $event) {
                 $event->types[] = PageSpeedWidget::class;
             }
         );
@@ -71,7 +74,7 @@ class Plugin extends BasePlugin
         Event::on(
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
+            function(RegisterUrlRulesEvent $event) {
                 $event->rules['lightning/api/run-audit'] = 'lightning/api/run-audit';
             }
         );
@@ -80,7 +83,7 @@ class Plugin extends BasePlugin
         Event::on(
             Entry::class,
             Element::EVENT_DEFINE_SIDEBAR_HTML,
-            function (DefineHtmlEvent $event) {
+            function(DefineHtmlEvent $event) {
                 /** @var Entry $entry */
                 $entry = $event->sender;
 

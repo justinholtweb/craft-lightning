@@ -3,7 +3,7 @@
   "description": "Google PageSpeed Insights integration for Craft CMS — dashboard widget and entry-level performance auditing with Core Web Vitals metrics and optimization suggestions.",
   "type": "craft-plugin",
   "license": "proprietary",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "keywords": [
     "cms",
     "craftcms",

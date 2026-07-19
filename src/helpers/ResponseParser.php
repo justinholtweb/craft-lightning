@@ -64,7 +64,7 @@ class ResponseParser
                 $opportunities[] = [
                     'id' => $key,
                     'title' => $audit['title'] ?? $key,
-                    'description' => strip_tags($audit['description'] ?? ''),
+                    'description' => self::cleanDescription($audit['description'] ?? ''),
                     'savingsMs' => (int)round($savings),
                     'displayValue' => $audit['displayValue'] ?? null,
                     'score' => isset($audit['score']) ? (int)round($audit['score'] * 100) : null,
@@ -93,7 +93,7 @@ class ResponseParser
                 $diagnostics[] = [
                     'id' => $key,
                     'title' => $audit['title'] ?? $key,
-                    'description' => strip_tags($audit['description'] ?? ''),
+                    'description' => self::cleanDescription($audit['description'] ?? ''),
                     'displayValue' => $audit['displayValue'] ?? null,
                     'score' => isset($audit['score']) ? (int)round($audit['score'] * 100) : null,
                 ];
@@ -101,6 +101,24 @@ class ResponseParser
         }
 
         return array_slice($diagnostics, 0, self::MAX_ITEMS);
+    }
+
+    /**
+     * Clean an audit description for display.
+     *
+     * PSI descriptions are Markdown, not HTML — they routinely contain links
+     * in `[text](url)` form (e.g. a trailing "[Learn more](https://…)"). Those
+     * survive `strip_tags()`, so we also unwrap Markdown links down to their
+     * text and drop any leftover bracketed link that has no anchor text.
+     */
+    public static function cleanDescription(string $description): string
+    {
+        // [text](url) -> text
+        $description = preg_replace('/\[([^\]]+)\]\([^)]*\)/', '$1', $description);
+        // Strip any stray HTML tags that may also be present.
+        $description = strip_tags($description);
+
+        return trim($description);
     }
 
     /**

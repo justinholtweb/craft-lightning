@@ -144,4 +144,57 @@ class ResponseParserTest extends TestCase
 
         $this->assertCount(ResponseParser::MAX_ITEMS, $opportunities);
     }
+
+    public function testCleanDescriptionUnwrapsMarkdownLinks(): void
+    {
+        $cleaned = ResponseParser::cleanDescription(
+            'Resources are blocking the first paint of your page. [Learn more](https://example.com).'
+        );
+
+        // The link text is kept, the Markdown syntax and URL are removed.
+        $this->assertSame(
+            'Resources are blocking the first paint of your page. Learn more.',
+            $cleaned
+        );
+    }
+
+    public function testCleanDescriptionStripsHtmlTags(): void
+    {
+        $cleaned = ResponseParser::cleanDescription('Reduce <b>main-thread</b> work.');
+
+        $this->assertSame('Reduce main-thread work.', $cleaned);
+    }
+
+    public function testCleanDescriptionHandlesMultipleMarkdownLinks(): void
+    {
+        $cleaned = ResponseParser::cleanDescription(
+            'See [the docs](https://a.example) and [this guide](https://b.example) for details.'
+        );
+
+        $this->assertSame('See the docs and this guide for details.', $cleaned);
+        $this->assertStringNotContainsString('https://', $cleaned);
+        $this->assertStringNotContainsString('[', $cleaned);
+    }
+
+    public function testCleanDescriptionLeavesPlainTextUnchanged(): void
+    {
+        $this->assertSame('Just plain text.', ResponseParser::cleanDescription('Just plain text.'));
+        $this->assertSame('', ResponseParser::cleanDescription(''));
+    }
+
+    public function testDiagnosticDescriptionUnwrapsMarkdownLinks(): void
+    {
+        $audits = [
+            'diag' => [
+                'title' => 'Diagnostic',
+                'score' => 0.5,
+                'description' => 'Consider [reducing work](https://example.com).',
+                'details' => ['type' => 'table'],
+            ],
+        ];
+
+        $diagnostics = ResponseParser::extractDiagnostics($audits);
+
+        $this->assertSame('Consider reducing work.', $diagnostics[0]['description']);
+    }
 }

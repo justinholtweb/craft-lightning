@@ -1,5 +1,10 @@
 # Release Notes for Lightning
 
+## 5.0.1 - 2026-07-19
+
+### Fixed
+- Optimization opportunity and diagnostic descriptions now have their Markdown links (e.g. a trailing "[Learn more](…)") unwrapped to plain text, instead of leaking raw Markdown syntax and URLs into the UI.
+
 ## 5.0.0 - 2026-05-02
 
 ### Added
