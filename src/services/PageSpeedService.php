@@ -33,16 +33,7 @@ class PageSpeedService extends Component
             'key' => $apiKey,
         ]);
 
-        $apiUrl = self::API_ENDPOINT . '?' . $params;
-
-        $context = stream_context_create([
-            'http' => [
-                'timeout' => 60,
-                'ignore_errors' => true,
-            ],
-        ]);
-
-        $response = @file_get_contents($apiUrl, false, $context);
+        $response = $this->fetch(self::API_ENDPOINT . '?' . $params);
 
         if ($response === false) {
             return ['error' => 'Failed to connect to Google PageSpeed Insights API.'];
@@ -59,6 +50,26 @@ class PageSpeedService extends Component
         }
 
         return ResponseParser::parse($data);
+    }
+
+    /**
+     * Perform the HTTP request to the PSI API.
+     *
+     * Isolated so tests can exercise the response handling without hitting the
+     * network.
+     *
+     * @return string|false The raw response body, or `false` if the request failed.
+     */
+    protected function fetch(string $apiUrl): string|false
+    {
+        $context = stream_context_create([
+            'http' => [
+                'timeout' => 60,
+                'ignore_errors' => true,
+            ],
+        ]);
+
+        return @file_get_contents($apiUrl, false, $context);
     }
 
     /**

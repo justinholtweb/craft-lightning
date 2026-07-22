@@ -60,7 +60,7 @@ class PageSpeedWidget extends Widget
     {
         $rules = parent::defineRules();
         $rules[] = [['auditUrl'], 'url', 'defaultScheme' => 'https'];
-        $rules[] = [['strategy'], 'in', 'range' => ['mobile', 'desktop', 'both']];
+        $rules[] = [['strategy'], 'in', 'range' => ['mobile', 'desktop', 'both'], 'skipOnEmpty' => false];
         return $rules;
     }
 }

@@ -87,16 +87,41 @@ This plugin is licensed under [The Craft License](LICENSE.md).
 
 ## Development
 
-Install dependencies and run the test suite:
+The project ships with a [DDEV](https://ddev.com) environment providing PHP 8.2 and
+MariaDB 10.11. The integration suite needs the database, so run everything through it:
 
 ```sh
-composer install
-composer test
+ddev start
+ddev composer install
+cp tests/.env.example tests/.env
+ddev exec composer test
 ```
 
-Static analysis and code style checks are also available:
+### Test suites
+
+| Suite | Location | Runner | Needs a database |
+|-------|----------|--------|------------------|
+| Unit | `tests/unit` | PHPUnit | No |
+| Integration | `tests/integration` | Codeception + Craft | Yes |
+
+Unit tests cover the Craft-free response parsing in `ResponseParser`. Integration tests
+boot a real Craft installation with the plugin loaded to exercise the plugin lifecycle,
+settings, widget, service, and controller.
+
+Run them individually with:
 
 ```sh
-composer phpstan
-composer check-cs
+ddev exec composer test:unit
+ddev exec composer test:integration
+```
+
+The integration suite installs Craft into the DDEV database and drops all its tables
+between runs, so point it at a throwaway database only. Credentials live in `tests/.env`,
+which is untracked — copy `tests/.env.example` to create it.
+
+Static analysis and code style checks:
+
+```sh
+ddev exec composer phpstan
+ddev exec composer check-cs
 ```

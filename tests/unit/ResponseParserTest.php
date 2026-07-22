@@ -182,6 +182,99 @@ class ResponseParserTest extends TestCase
         $this->assertSame('', ResponseParser::cleanDescription(''));
     }
 
+    public function testOpportunityThresholdIsExclusive(): void
+    {
+        $audits = [
+            'at-threshold' => ['details' => ['overallSavingsMs' => ResponseParser::MIN_OPPORTUNITY_SAVINGS_MS]],
+            'just-over' => ['details' => ['overallSavingsMs' => ResponseParser::MIN_OPPORTUNITY_SAVINGS_MS + 1]],
+        ];
+
+        $ids = array_column(ResponseParser::extractOpportunities($audits), 'id');
+
+        $this->assertSame(['just-over'], $ids);
+    }
+
+    public function testOpportunityFallsBackToKeyWhenTitleIsMissing(): void
+    {
+        $opportunities = ResponseParser::extractOpportunities([
+            'untitled-audit' => ['details' => ['overallSavingsMs' => 500]],
+        ]);
+
+        $this->assertSame('untitled-audit', $opportunities[0]['title']);
+        $this->assertSame('', $opportunities[0]['description']);
+        $this->assertNull($opportunities[0]['displayValue']);
+        $this->assertNull($opportunities[0]['score']);
+    }
+
+    public function testCapsDiagnosticsAtMaxItems(): void
+    {
+        $audits = [];
+        for ($i = 0; $i < 15; $i++) {
+            $audits["diag-$i"] = [
+                'title' => "Diagnostic $i",
+                'score' => 0.5,
+                'details' => ['type' => 'table'],
+            ];
+        }
+
+        $this->assertCount(ResponseParser::MAX_ITEMS, ResponseParser::extractDiagnostics($audits));
+    }
+
+    public function testDiagnosticsExcludeInformationalAuditsWithoutAScore(): void
+    {
+        // Informational audits report a null score; they aren’t failures.
+        $diagnostics = ResponseParser::extractDiagnostics([
+            'informational' => ['score' => null, 'details' => ['type' => 'table']],
+        ]);
+
+        $this->assertSame([], $diagnostics);
+    }
+
+    public function testDiagnosticsExcludeNonTableDetailTypes(): void
+    {
+        $diagnostics = ResponseParser::extractDiagnostics([
+            'filmstrip' => ['score' => 0.1, 'details' => ['type' => 'filmstrip']],
+            'no-details' => ['score' => 0.1],
+        ]);
+
+        $this->assertSame([], $diagnostics);
+    }
+
+    public function testScoresAreConvertedToPercentages(): void
+    {
+        $opportunity = ResponseParser::extractOpportunities([
+            'op' => ['score' => 0.455, 'details' => ['overallSavingsMs' => 500]],
+        ])[0];
+
+        // 0.455 * 100 rounds to 46.
+        $this->assertSame(46, $opportunity['score']);
+    }
+
+    public function testZeroScoresAreRetainedRatherThanNulled(): void
+    {
+        $metric = ResponseParser::extractMetric(['lcp' => ['score' => 0]], 'lcp');
+
+        $this->assertSame(0, $metric['score']);
+    }
+
+    public function testSpeedIndexAliasesShareTheSameValues(): void
+    {
+        $metrics = ResponseParser::parse($this->fixture)['metrics'];
+
+        $this->assertSame($metrics['speedIndex'], $metrics['si']);
+    }
+
+    public function testParseIgnoresLighthouseResultsWithoutAudits(): void
+    {
+        $result = ResponseParser::parse([
+            'lighthouseResult' => ['categories' => ['performance' => ['score' => 0.5]]],
+        ]);
+
+        $this->assertSame(50, $result['performanceScore']);
+        $this->assertSame([], $result['opportunities']);
+        $this->assertSame([], $result['diagnostics']);
+    }
+
     public function testDiagnosticDescriptionUnwrapsMarkdownLinks(): void
     {
         $audits = [

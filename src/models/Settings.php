@@ -17,7 +17,9 @@ class Settings extends Model
         return [
             [['apiKey'], 'required', 'message' => 'A Google PageSpeed Insights API key is required.'],
             [['apiKey'], 'string'],
-            [['defaultStrategy'], 'in', 'range' => ['mobile', 'desktop', 'both']],
+            // `skipOnEmpty` is on by default for `in`, which would let an empty
+            // strategy through.
+            [['defaultStrategy'], 'in', 'range' => ['mobile', 'desktop', 'both'], 'skipOnEmpty' => false],
         ];
     }
 }
